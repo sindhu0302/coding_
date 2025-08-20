@@ -1,0 +1,21 @@
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = []
+    if start not in visited:
+        visited.append(start)
+        for neighbor in graph[start]:
+            dfs(graph, neighbor, visited)
+    return visited
+
+# Example graph
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+# Run DFS
+print("DFS Traversal:", dfs(graph, 'A'))
