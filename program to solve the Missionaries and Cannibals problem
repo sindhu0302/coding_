@@ -1,0 +1,45 @@
+from collections import deque
+
+def is_valid(state):
+    M_left, C_left, M_right, C_right, boat = state
+    if (M_left < 0 or C_left < 0 or M_right < 0 or C_right < 0):
+        return False
+    if (M_left > 0 and M_left < C_left):
+        return False
+    if (M_right > 0 and M_right < C_right):
+        return False
+    return True
+
+def missionaries_cannibals():
+    start = (3, 3, 0, 0, 0)  # (M_left, C_left, M_right, C_right, boat)
+    goal = (0, 0, 3, 3, 1)
+    q = deque([(start, [start])])
+    visited = set()
+
+    while q:
+        state, path = q.popleft()
+        if state in visited:
+            continue
+        visited.add(state)
+
+        if state == goal:
+            for step in path:
+                print(step)
+            print("Goal reached!")
+            return
+
+        M_left, C_left, M_right, C_right, boat = state
+        if boat == 0:  # Boat on left
+            moves = [(1,0), (2,0), (0,1), (0,2), (1,1)]
+            for M, C in moves:
+                new_state = (M_left-M, C_left-C, M_right+M, C_right+C, 1)
+                if is_valid(new_state):
+                    q.append((new_state, path+[new_state]))
+        else:  # Boat on right
+            moves = [(1,0), (2,0), (0,1), (0,2), (1,1)]
+            for M, C in moves:
+                new_state = (M_left+M, C_left+C, M_right-M, C_right-C, 0)
+                if is_valid(new_state):
+                    q.append((new_state, path+[new_state]))
+
+missionaries_cannibals()
