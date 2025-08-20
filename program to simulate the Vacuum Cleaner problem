@@ -1,0 +1,19 @@
+def vacuum_cleaner(roomA, roomB):
+    print("Initial State => Room A:", roomA, ", Room B:", roomB)
+
+    # Start in Room A
+    if roomA == "Dirty":
+        print("Vacuum in Room A: Cleaning Room A")
+        roomA = "Clean"
+    print("Room A is now", roomA)
+
+    # Move to Room B
+    if roomB == "Dirty":
+        print("Vacuum moves to Room B: Cleaning Room B")
+        roomB = "Clean"
+    print("Room B is now", roomB)
+
+    print("Final State => Room A:", roomA, ", Room B:", roomB)
+
+# Example Run
+vacuum_cleaner("Dirty", "Dirty")
