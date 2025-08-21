@@ -1,0 +1,30 @@
+def is_safe(region, color, assignment, neighbors):
+    for neighbor in neighbors[region]:
+        if neighbor in assignment and assignment[neighbor] == color:
+            return False
+    return True
+
+def map_coloring(regions, colors, neighbors, assignment={}):
+    if len(assignment) == len(regions):
+        return assignment
+    region = [r for r in regions if r not in assignment][0]
+    for color in colors:
+        if is_safe(region, color, assignment, neighbors):
+            assignment[region] = color
+            result = map_coloring(regions, colors, neighbors, assignment)
+            if result:
+                return result
+            assignment.pop(region)
+    return None
+
+regions = ['A', 'B', 'C', 'D']
+neighbors = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D'],
+    'D': ['B', 'C']
+}
+colors = ['Red', 'Green', 'Blue']
+
+solution = map_coloring(regions, colors, neighbors)
+print("Coloring:", solution)
