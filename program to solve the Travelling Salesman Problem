@@ -1,0 +1,33 @@
+import sys
+
+def tsp(graph, start):
+    n = len(graph)
+    visited = [False] * n
+    path = [start]
+    visited[start] = True
+    cost = 0
+
+    for _ in range(n - 1):
+        last = path[-1]
+        next_city = None
+        min_dist = sys.maxsize
+        for j in range(n):
+            if not visited[j] and 0 < graph[last][j] < min_dist:
+                min_dist = graph[last][j]
+                next_city = j
+        path.append(next_city)
+        visited[next_city] = True
+        cost += min_dist
+
+    cost += graph[path[-1]][start]
+    path.append(start)
+    return path, cost
+
+graph = [[0, 10, 15, 20],
+         [10, 0, 35, 25],
+         [15, 35, 0, 30],
+         [20, 25, 30, 0]]
+
+path, cost = tsp(graph, 0)
+print("Path:", path)
+print("Cost:", cost)
