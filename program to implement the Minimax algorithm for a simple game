@@ -1,0 +1,12 @@
+# Minimax Algorithm Example
+
+def minimax(depth, isMaximizing):
+    if depth == 0:   # Base condition (leaf node values)
+        return 1 if isMaximizing else -1
+    
+    if isMaximizing:
+        return max(minimax(depth - 1, False), minimax(depth - 1, True))
+    else:
+        return min(minimax(depth - 1, False), minimax(depth - 1, True))
+
+print("Best score for maximizer:", minimax(2, True))
